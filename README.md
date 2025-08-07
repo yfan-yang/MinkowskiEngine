@@ -79,6 +79,12 @@ If you cannot find a relevant problem, please report the issue on [the github is
 
 ### Pip
 
+**Update**: To install `MinkowskiEngine` directly in `./site-packages`, use:
+
+```
+python setup.py install
+```
+
 The MinkowskiEngine is distributed via [PyPI MinkowskiEngine][pypi-url] which can be installed simply with `pip`.
 First, install pytorch following the [instruction](https://pytorch.org). Next, install `openblas`.
 
