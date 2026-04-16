@@ -597,4 +597,20 @@ class concurrent_unordered_map {
   }
 };
 
+// Explicit swap overload for raw pointers to concurrent_unordered_map.
+// In CUDA 12.x, thrust::pair is an alias for cuda::std::pair, which causes ADL
+// to pull cuda::std::swap into scope alongside std::swap when
+// std::unique_ptr<concurrent_unordered_map<...>>::reset() calls unqualified
+// swap on its internal pointer. This more-specialized overload is preferred by
+// overload resolution, resolving the ambiguity.
+template <typename Key, typename Element, typename Hasher, typename Equality,
+          typename Allocator>
+inline void
+swap(concurrent_unordered_map<Key, Element, Hasher, Equality, Allocator> *&a,
+     concurrent_unordered_map<Key, Element, Hasher, Equality, Allocator> *&b) noexcept {
+  auto tmp = a;
+  a = b;
+  b = tmp;
+}
+
 #endif  // CONCURRENT_UNORDERED_MAP_CUH
